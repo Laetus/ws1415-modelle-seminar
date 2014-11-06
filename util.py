@@ -50,3 +50,20 @@ def plotEllipse(a,b):
 	im = fig.add_subplot(111);
 	im.plot(res[0,:], res[1,:], '+');
 	fig.show();
+
+
+if(isOnEllipse(a, b, s)):
+	def Billiard(s, steigung, a,b):
+		s_new = neuerPunktBerechnen(s, steigung)
+		normale = normaleBerechnen(s_new)
+		steigung = sberechnen(normale, steigung)
+	for():
+	=> Array mit Punkten
+Array sortieren (über winkel)
+neues Arry mit winkeln 
+benachbarte punkte bleiben benachbart a b y ( immer a neben b)
+... siehe blatt
+
+
+	
+	
