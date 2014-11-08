@@ -2,6 +2,25 @@
 import numpy as np
 import matplotlib.pyplot as pp
 
+
+""" Allgemeiner Plan
+
+Darstellung von Vektoren immer als v =  np.array([x,y]) oder np.array([x,y,z]) im dreidimensionalen. Denn Operationen mit v sind dann besser lesbar. Dies verbessert die Lesbarkeit denn v * 2  ist dann z.B. np.array([2x , 2y]) und nicht (x , y, x,y )
+
+if(isOnEllipse(a, b, s)):
+	def Billiard(s, steigung, a,b):
+		s_new = neuerPunktBerechnen(s, steigung)
+		normale = normaleBerechnen(s_new)
+		steigung = sberechnen(normale, steigung)
+	for():
+	=> Array mit Punkten
+Array sortieren (über winkel)
+neues Arry mit winkeln 
+benachbarte punkte bleiben benachbart a b y ( immer a neben b)
+... siehe blatt
+"""
+
+
 """
 Parameter der Ellipse
 """
@@ -62,34 +81,21 @@ def plotEllipse():
 	im.plot(res[0,:], res[1,:], '+');
 	fig.show();
 
-""" Allgemeiner Plan
-if(isOnEllipse(a, b, s)):
-	def Billiard(s, steigung, a,b):
-		s_new = neuerPunktBerechnen(s, steigung)
-		normale = normaleBerechnen(s_new)
-		steigung = sberechnen(normale, steigung)
-	for():
-	=> Array mit Punkten
-Array sortieren (über winkel)
-neues Arry mit winkeln 
-benachbarte punkte bleiben benachbart a b y ( immer a neben b)
-... siehe blatt
-"""
-
 """
 s ist Vektor, steigung ist zahl
 """
 def neuerPunkt(s, steigung):
 	global a
 	global b	
+	steigung = steigung *1.0
 	'Berechne t'
 	t = s[1] - steigung * s[0]
 	print(t)
+
 	'Berechne x'
-	sol1 = solveMitternacht((-b/a) - steigung**2, -2 * steigung * t, b- t**2)
+	"sol1 = solveMitternacht((-b/a) - steigung**2, -2 * steigung * t, b- t**2)"
 	sol = solveMitternacht((1/a**2)+ (steigung**2/ b**2), 2 * steigung * t/(b**2) , ((t/b)**2) - 1 )
 
-	sol = sol1
 	if (s[0] == sol[0]):
 		if (s[0] == sol[1]):
 			raise Error("Beide Lösungen fallen zusammen")
@@ -99,17 +105,27 @@ def neuerPunkt(s, steigung):
 		x_neu = sol[0]
 	
 	'Berechne y'
-	
 	y_neu = (steigung * x_neu) + t
 
 	return (x_neu, y_neu)
 
 """
-Löst die Mitternachtsformel korrekt
+Löst die Mitternachtsformel
 """
 def solveMitternacht(a,b,c):
-	print(a,b,c)
-	x1 =  (-b + np.sqrt(b**2 - (4 * a *c)))/(2 * a)
-	x2 =  (-b - np.sqrt(b**2 - (4 * a *c)))/(2 * a)
-	return (x1 , x2)
 	
+	a = a * 1.0
+	b = b * 1.0
+	c = c * 1.0
+
+	square = b**2 - (4 * a *c)
+	if square < 0 : 
+		raise Error("Wurzel ist negativ, es gibt keine reele Lösung")
+
+	if square == 0 :
+		print("Es gibt nur eine Lösung!")
+
+	x1 =  (-b + np.sqrt(square))/(2 * a)
+	x2 =  (-b - np.sqrt(square))/(2 * a)
+	return (x1 , x2)
+
