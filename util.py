@@ -129,3 +129,57 @@ def solveMitternacht(a,b,c):
 	x2 =  (-b - np.sqrt(square))/(2 * a)
 	return (x1 , x2)
 
+
+"""
+Berechne die normierte Normale der Gerade
+"""
+def berechneNormale(x):
+	global a
+	global b
+	normale = np.array( [x[0]/(a**2)] , [x[1]/(b**2)] )	
+	return normale / np.linalg.norm(normale)	
+
+
+"""
+Berechne die neue Steigung am Punkt x, sodass Einfallswinkel = Ausfallswinkel ist
+"""
+def berechneNeueSteigung(x, m_alt):
+	'Berechne Normale am Punkt x'
+	normale = berechneNormale(x)
+	
+	'Berechne Einfallswinkel d.h. Winkel zwischen Normale und Geraden'
+	gerade_alt = np.array([1 , m_alt])
+	'Normieren'
+	gerade_alt = gerade_alt / np.linalg.norm(gerade_alt)
+
+	winkel = np.arccos( np.dot(gerade_alt , normale))
+
+	gerade_neu
+
+	'Drehsinn herausfinden'
+	if (drehMatrix2D(winkel) * gerade_alt == normale) :
+		gerade_neu = drehMatrix2D(2*winkel) * gerade_alt
+	elif (drehMatrix2D(-winkel) * gerade_alt == normale) : 
+		gerade_neu = drehMatrix2D(-2*winkel) * gerade_alt
+	else :
+		raise Error('Alte Gerade konnte nicht auf Normale gedreht werden')
+	
+	'Steigung ist x[1], wenn x[0]== 1'
+	if (gerade_neu[0] != 0) :	
+		gerade_neu = gerade_neu / gerade_neu[0]
+	else :
+		raise Errror('Neue Steigung ist unendlich')
+	
+	return gerade_neu[1]
+	 
+
+def drehMatrix2D(winkel):
+	sin = np.sin(winkel)
+	cos = np.cos(winkel)
+	return np.array( ((cos, -sin) , (sin , cos)) )
+	
+
+
+	
+
+
