@@ -36,11 +36,11 @@ def startBilliard(x0,d0, it):
 
 		'Schreibe neune Punkte und Richtungen weg'
 		listX = np.append(listX, [x_neu], axis=0)
-		listD = np.append(listD, [d_neu], acis=0)
+		listD = np.append(listD, [d_neu], axis=0)
 		
 		'Bereite neue Iteration vor'
 		x0 = x_neu
-		d0 = x_neu
+		d0 = d_neu
 
 	print("Billiard fertig!") 
 	return (listX, listD)	
@@ -154,7 +154,7 @@ def neuerPunktV(alt, d):
 		raiseError("Es gibt nur eine Lösung!")
 	
 	'Normieren'
-	return neu / np.linalg.norm(neu)
+	return neu
 
 """
 Löst die Mitternachtsformel
@@ -167,7 +167,7 @@ def solveMitternacht(a,b,c):
 
 	square = b**2 - (4 * a *c)
 	if square < 0 : 
-		raise Error("Wurzel ist negativ, es gibt keine reele Lösung")
+		raise Error("Wurzel ist negativ, es gibt keine reelle Lösung")
 
 	if square == 0 :
 		print("Es gibt nur eine Lösung!")
@@ -243,10 +243,13 @@ def berechneNeueRichtung(x, d_alt) :
 	else :
 		raise Error("Drehung schlug fehl")
 	
+
+	'Ergebnis konvertieren'
+	d_neu = np.array((d_neu[0,0] ,d_neu[0,1]))
 	return d_neu / np.linalg.norm(d_neu)
 
 
 def drehMatrix2D(winkel):
 	sin = np.sin(winkel)
 	cos = np.cos(winkel)
-	return np.array(( (cos, -sin) , (sin , cos) ))
+	return np.matrix(( (cos, -sin) , (sin , cos) ))
