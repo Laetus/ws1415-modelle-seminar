@@ -4,4 +4,4 @@
 
 Projekt Visualisierung Delaunay Flächen
 filename = "C:/Users/..."
-exec(compile(oopen(filename), read(), filename, 'exec'))
+exec(compile(open(filename).read(), filename, 'exec'))

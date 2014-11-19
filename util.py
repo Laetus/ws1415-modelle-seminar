@@ -60,6 +60,9 @@ a = 2.0
 global b
 b = 1.0
 
+global f
+f = np.array((np.sqrt(a**2-b**2),0))
+
 global eps
 eps = 0.0000001
 """
@@ -191,3 +194,44 @@ def drehMatrix2D(winkel):
 	sin = np.sin(winkel)
 	cos = np.cos(winkel)
 	return np.matrix(((cos, -sin), (sin, cos)))
+
+'''
+def sortieren(p):
+	return np.arccos(p[0]/a)
+	 
+	
+def berechenPhi(listX):
+	for (i in range(length(listX))):
+		sortieren()
+'''
+
+def berechenWinkel(p0, p1):
+	p0p1 = np.linalg.norm(p0 - p1)
+	p0f = np.linalg.norm(p0 - f)
+	p1f = np.linalg.norm(p1 - f)
+    w0 = np.arccos((p0f**2+p0p1**2-p1f**2)/(2*p0p1*p0f))
+	w1 = np.arccos((p1f**2+p0p1**2-p0f**2)/(2*p0p1*p1f))
+    return np.array((p0p1, w0, w1))
+
+def spitzPunkt(p, pos):
+    m0 = np.array((np.sin(p[1]), np.cos(p[1])))
+    m1 = np.array((-np.sin(p[2]), np.cos(p[2])))
+    g0 = pos + x * m0
+    g1 = (pos + p[0]*np.array((1,0))) + y * m1
+    x = a np.linalg.norm
+    
+    
+    
+def Ausrollen(listX):
+    pos = np.array((0,0))
+    Pliste = np.array([])
+    for (i in range(length(listX)-1)):
+        aww = berechneWinkel(listX[0], listX[1])
+        Punkt = spitzpunkt(aww, pos)
+        pos = pos + aww[0] *np.array((1,0))
+        np.append(Pliste, [Punkt], axis=0)
+        
+        
+
+
+			  
