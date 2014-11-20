@@ -45,8 +45,8 @@ def startBilliard(x0, d0):
 		if(np.linalg.norm(startpunkt - x0) < eps):
 			break 
 	print("Billiard fertig!", x+1) 
-	return (listX, listD)   
-
+	#return (listX, listD)  
+	return listX
 """
 Parameter der Ellipse
 """
@@ -205,33 +205,30 @@ def berechenPhi(listX):
 		sortieren()
 '''
 
-def berechenWinkel(p0, p1):
+def berechneWinkel(p0, p1):
 	p0p1 = np.linalg.norm(p0 - p1)
 	p0f = np.linalg.norm(p0 - f)
 	p1f = np.linalg.norm(p1 - f)
-    w0 = np.arccos((p0f**2+p0p1**2-p1f**2)/(2*p0p1*p0f))
+	w0 = np.arccos((p0f**2+p0p1**2-p1f**2)/(2*p0p1*p0f))
 	w1 = np.arccos((p1f**2+p0p1**2-p0f**2)/(2*p0p1*p1f))
-    return np.array((p0p1, w0, w1))
+	return np.array((p0p1, w0, w1))
 
-def spitzPunkt(p, pos):
-    m0 = np.array((np.sin(p[1]), np.cos(p[1])))
-    m1 = np.array((-np.sin(p[2]), np.cos(p[2])))
-    g0 = pos + x * m0
-    g1 = (pos + p[0]*np.array((1,0))) + y * m1
-    x = a np.linalg.norm
-    
-    
-    
+def spitzPunkt(aww, pos): #aww: von berechenWinkel (Abstand, Winkel1, Winkel2), pos: Position auf x-Achse
+	m0 = np.array((np.sin(aww[1]), np.cos(aww[1])))
+	m1 = np.array((-np.sin(aww[2]), np.cos(aww[2])))
+	lam = (1/(m0[1]-((m0[0]/m1[0]*m1[1]))))*(-aww[0]/m1[0]*m1[1])   
+	return pos+(lam*m0)
+	
 def Ausrollen(listX):
-    pos = np.array((0,0))
-    Pliste = np.array([])
-    for (i in range(length(listX)-1)):
-        aww = berechneWinkel(listX[0], listX[1])
-        Punkt = spitzpunkt(aww, pos)
-        pos = pos + aww[0] *np.array((1,0))
-        np.append(Pliste, [Punkt], axis=0)
-        
-        
+	pos = np.array((0,0))
+	Pliste = np.array([])
+	for i in range(listX.shape[0]-1):
+		aww = berechneWinkel(listX[0], listX[1])
+		Punkt = spitzPunkt(aww, pos)
+		pos = pos + aww[0] *np.array((1,0))
+		np.append(Pliste, Punkt, axis=0)
+	return Pliste	   
+		
 
 
 			  
