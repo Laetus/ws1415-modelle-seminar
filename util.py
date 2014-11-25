@@ -219,15 +219,17 @@ def spitzPunkt(aww, pos): #aww: von berechenWinkel (Abstand, Winkel1, Winkel2), 
 	lam = (1/(m0[1]-((m0[0]/m1[0]*m1[1]))))*(-aww[0]/m1[0]*m1[1])   
 	return pos+(lam*m0)
 	
-def Ausrollen(listX):
+def ausrollen(listX):
 	pos = np.array((0,0))
-	Pliste = np.array([])
-	for i in range(listX.shape[0]-1):
-		aww = berechneWinkel(listX[0], listX[1])
-		Punkt = spitzPunkt(aww, pos)
-		pos = pos + aww[0] *np.array((1,0))
-		np.append(Pliste, Punkt, axis=0)
-	return Pliste	   
+	listP = np.array([pos])
+	for i in range(listX.shape[0]-1 ):
+		aww = berechneWinkel( listX[i], listX[i+1] )
+		print(i)
+		punkt = spitzPunkt(aww, pos)
+		print(punkt)
+		pos = pos + aww[0] * np.array((1,0))
+		listP = np.append(listP, [punkt], axis=0) 
+	return listP	 
 		
 
 
