@@ -26,8 +26,8 @@ def startBilliard(x0, d0):
 	d0 = d0 * 1.0
 	startpunkt = x0
 
-	listX = np.array( [x0] )	
-	listD = np.array( [d0] )
+	listX = []  
+	listD = []
 
 	for x in range (0, maxIterationen) :
 		'Berechne neuen Punkt'
@@ -36,8 +36,8 @@ def startBilliard(x0, d0):
 		d_neu = berechneNeueRichtung(x_neu, d0)
 
 		'Schreibe neune Punkte und Richtungen weg'
-		listX = np.append(listX, [x_neu], axis=0)
-		listD = np.append(listD, [d_neu], axis=0)
+		listX.append(x_neu)
+		listD.append(d_neu)
 		
 		'Bereite neue Iteration vor'
 		x0 = x_neu
@@ -45,7 +45,9 @@ def startBilliard(x0, d0):
 		if(np.linalg.norm(startpunkt - x0) < eps):
 			break 
 	print("Billiard fertig!", x+1) 
-	#return (listX, listD)  
+	#return (listX, listD)
+	listX.sort(key=berechneEllipsenWinkel)
+	#listX = sorted(listX, vergleichsFunktion)
 	return listX
 """
 Parameter der Ellipse
@@ -205,6 +207,28 @@ def berechenPhi(listX):
 		sortieren()
 '''
 
+def vergleichsFunktion(p1, p2) :
+	alpha = berechneEllipsenWinkel(p1)
+	beta = berechneEllipsenWinkel(p2)
+	return alpha - beta
+
+
+def berechneEllipsenWinkel(p):
+	alpha = np.arccos( np.abs( p[0] /a))
+	print(p[0])
+	print(p[1])
+	print(type(p))
+	print(type(p[0]))
+	if  (p[0] >= 0) & (p[1] >= 0) :
+		return alpha
+	elif (p[0] <= 0) & (p[1] >= 0 ):
+		return np.pi - alpha
+	elif (p[0] <= 0 ) & (p[1] <= 0) :
+		return np.pi + alpha
+	elif (p[0] >= 0) & (p[1] <= 0) :
+		return 2 * np.pi - alpha
+	
+	
 def berechneWinkel(p0, p1):
 	p0p1 = np.linalg.norm(p0 - p1)
 	p0f = np.linalg.norm(p0 - f)

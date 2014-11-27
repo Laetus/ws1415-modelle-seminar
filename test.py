@@ -84,12 +84,12 @@ def zeichneEllipse() :
 
     
     print(a)
-    pkt = np.transpose(ellipsenPunkte(100))   
+    pkt = ellipsenPunkte(1000)
     
     mesh = bpy.data.meshes.new("Ellipse")
     object = bpy.data.objects.new("Ellipse", mesh)
     
-    object.location = bpy.context.scene.cursor_location
+   # object.location = bpy.context.scene.cursor_location
     bpy.context.scene.objects.link(object)
     
     mesh.from_pydata(np.asarray(pkt), [], [])
@@ -98,10 +98,10 @@ def zeichneEllipse() :
     
     
 def ellipsenPunkte(N):
-	res = np.zeros((2,0));
+	res = []
 	for x in range (0,N+1):
 		phi = x * 2 * np.pi / (N+1)
-		p = [[a * np.cos(phi) ] , [b * np.sin(phi) ]]
-		res = np.append(res, p,1);
+		p = (a * np.cos(phi)  , b * np.sin(phi),0 )
+		res.append(p);
 	
 	return res
