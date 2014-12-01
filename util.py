@@ -26,8 +26,8 @@ def startBilliard(x0, d0):
 	d0 = d0 * 1.0
 	startpunkt = x0
 
-	listX = []  
-	listD = []
+	listX = [x0]  
+	listD = [d0]
 
 	for x in range (0, maxIterationen) :
 		'Berechne neuen Punkt'
@@ -54,7 +54,7 @@ Parameter der Ellipse
 """
 
 global maxIterationen
-maxIterationen = 50
+maxIterationen = 25
 
 global a 
 a = 2.0
@@ -197,15 +197,6 @@ def drehMatrix2D(winkel):
 	cos = np.cos(winkel)
 	return np.matrix(((cos, -sin), (sin, cos)))
 
-'''
-def sortieren(p):
-	return np.arccos(p[0]/a)
-	 
-	
-def berechenPhi(listX):
-	for (i in range(length(listX))):
-		sortieren()
-'''
 
 def vergleichsFunktion(p1, p2) :
 	alpha = berechneEllipsenWinkel(p1)
@@ -215,10 +206,6 @@ def vergleichsFunktion(p1, p2) :
 
 def berechneEllipsenWinkel(p):
 	alpha = np.arccos( np.abs( p[0] /a))
-	print(p[0])
-	print(p[1])
-	print(type(p))
-	print(type(p[0]))
 	if  (p[0] >= 0) & (p[1] >= 0) :
 		return alpha
 	elif (p[0] <= 0) & (p[1] >= 0 ):
@@ -255,6 +242,13 @@ def ausrollen(listX):
 		listP = np.append(listP, [punkt], axis=0) 
 	return listP	 
 		
-
+def ellipsenPunkte(N,zWert):
+	res = []
+	for x in range (0,N+1):
+		phi = x * 2 * np.pi / (N+1)
+		p = np.array((a * np.cos(phi)  , b * np.sin(phi), zWert ))
+		res.append(p);
+	
+	return res
 
 			  

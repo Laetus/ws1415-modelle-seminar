@@ -2,6 +2,7 @@ import bpy
 import math
 import util
 
+'''
 # clear mesh and object
 for item in bpy.context.scene.objects:
     if item.type == 'MESH':
@@ -67,10 +68,15 @@ bpy.context.scene.objects.link(object)
 mesh.from_pydata(verts,[],faces)
 mesh.update(calc_edges=True)
 
+'''
 
 
+def zeichneEllipse(name,anzPunkte, zWert) :
+    pkt = util.ellipsenPunkte(anzPunkte, zWert)
+    zeichneMesh(name, pkt, (),() )
 
-def zeichneEllipse() :
+
+def entferneMeshes():
     for item in bpy.context.scene.objects:
         if item.type == 'MESH':
            bpy.context.scene.objects.unlink(item)
@@ -82,26 +88,30 @@ def zeichneEllipse() :
     for item in bpy.data.materials:
         bpy.data.materials.remove(item)
 
+def zeichne2DPolygon(name, listPunkte, zWert):
+     punkte = []
+     kanten = []
+     i  = 0
+     anzPunkte = len(listPunkte)
+     for element in listPunkte :
+         if element.size == 2 : 
+             punkte.append( (element[0] , element[1] , zWert) )
+             kanten.append( (i, (i+1) % anzPunkte) )
+             i += 1
+         else :
+             raise Error("Die Punkte haben die falsche Dimension!")
+         
+     #Print mesh into scene
+     zeichneMesh(name, punkte, kanten, () )
+     return (punkte, kanten)
     
-    print(a)
-    pkt = ellipsenPunkte(1000)
-    
-    mesh = bpy.data.meshes.new("Ellipse")
-    object = bpy.data.objects.new("Ellipse", mesh)
+              
+def zeichneMesh(name, punkte, kanten, flaechen):
+    mesh = bpy.data.meshes.new(name)
+    object = bpy.data.objects.new(name, mesh)
     
    # object.location = bpy.context.scene.cursor_location
     bpy.context.scene.objects.link(object)
     
-    mesh.from_pydata(np.asarray(pkt), [], [])
+    mesh.from_pydata(punkte, kanten, flaechen)
     mesh.update(calc_edges=True)
-    
-    
-    
-def ellipsenPunkte(N):
-	res = []
-	for x in range (0,N+1):
-		phi = x * 2 * np.pi / (N+1)
-		p = (a * np.cos(phi)  , b * np.sin(phi),0 )
-		res.append(p);
-	
-	return res
