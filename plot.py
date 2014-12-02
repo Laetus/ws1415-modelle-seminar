@@ -8,9 +8,22 @@ def zeichneEllipse(name,anzPunkte, zWert) :
     kanten = []
     for num in range(0,anzPunkte):
         kanten.append( (num , (num+1) % anzPunkte) )
+        
     zeichneMesh(name, pkt, kanten,() )
-
-
+    #Zeichne die Focuspunkte mit ein
+    left = (np.sqrt(a**2  - b**2) ,0 , zWert ) 
+    right = ( - np.sqrt(a**2  - b**2) ,0 , zWert )
+    
+    ellipse = bpy.data.objects.get(name)
+    scene = bpy.context.scene
+    scene.objects.active = ellipse
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.primitive_circle_add(enter_editmode=True, location=left, radius=0.01)
+    bpy.ops.mesh.primitive_circle_add(enter_editmode=True, location=right, radius=0.01)
+    bpy.ops.object.mode_set(mode='OBJECT')
+    
+    
+    
 def entferneMeshes():
     for item in bpy.context.scene.objects:
         if item.type == 'MESH':
@@ -35,7 +48,7 @@ def zeichne2DPolygon(name, listPunkte, zWert):
              i += 1
          else :
              raise Error("Die Punkte haben die falsche Dimension!")
-         
+             
      #Print mesh into scene
      zeichneMesh(name, punkte, kanten, () )
      return (punkte, kanten)
