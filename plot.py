@@ -6,14 +6,20 @@ import util
 def zeichneEllipse(name,anzPunkte, zWert) :
     pkt = ellipsenPunkte(anzPunkte, zWert)
     kanten = []
+    flaechen = []
+    l = []
+    #Jede Ecke hat einen Vorgänger und einen Nachfolger
     for num in range(0,anzPunkte):
         kanten.append( (num , (num+1) % anzPunkte) )
-        
-    zeichneMesh(name, pkt, kanten,() )
+    
+    l.extend(range(0,anzPunkte))
+    #Es gibt eine Fläche, welche alle Punkte als Ecke hat
+    flaechen.append( list(range(0,anzPunkte) ) )
+    zeichneMesh(name, pkt, kanten,flaechen )
+    
     #Zeichne die Focuspunkte mit ein
     left = (np.sqrt(a**2  - b**2) ,0 , zWert ) 
     right = ( - np.sqrt(a**2  - b**2) ,0 , zWert )
-    
     ellipse = bpy.data.objects.get(name)
     scene = bpy.context.scene
     scene.objects.active = ellipse
@@ -61,5 +67,5 @@ def zeichneMesh(name, punkte, kanten, flaechen):
    # object.location = bpy.context.scene.cursor_location
     bpy.context.scene.objects.link(object)
     
-    mesh.from_pydata(punkte, kanten, flaechen)
+    mesh.from_pydata(punkte, kanten, flaechen )
     mesh.update(calc_edges=True)
