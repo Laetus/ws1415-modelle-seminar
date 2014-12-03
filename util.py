@@ -56,7 +56,7 @@ Parameter der Ellipse
 """
 
 global maxIterationen
-maxIterationen = 25
+maxIterationen = 10
 
 global a 
 a = 2.0

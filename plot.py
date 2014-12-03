@@ -59,38 +59,53 @@ def zeichne2DPolygon(name, listPunkte, zWert):
      zeichneMesh(name, punkte, kanten, () )
     
  
-
-def zeichneRotationsKoerper(name, polygon, N):
-    punkte = polygon
+def zeichneRotation(name, polygon, N ):
+    punkte = []
     kanten = []
     flaechen = []
-    
-    ersterPkt = polygon[0]
     anzPunkte = len(polygon)
-    
-    for i in range(1, N):
+    for i in range(0,N):
         stellePunkt = 0
-        for punkt in polygon : 
-            neuerPunkt =  ( punkt[0] , np.cos(i/N * np.pi * 2) * punkt[1] , np.sin(i/N * np.pi * 2) * punkt[1] )
+        for punkt in polygon:
+            neuerPunkt = (punkt[0], np.cos(i/N * np.pi * 2) * punkt[1] , np.sin(i/N * np.pi * 2) * punkt[1] )
             punkte.append(neuerPunkt)
-            if (stellePunkt != 0 ) :
+            
+            c = ((anzPunkte) * i) + stellePunkt - 1
+            d = ((anzPunkte) * i) + stellePunkt 
+            a = c - anzPunkte
+            b = d - anzPunkte
+           
+            #erzeuge Kanten
+            if ( i == 0 ) :
+                if ( stellePunkt != 0 ):
+                    #Kante parallel zur Rotationsachse
+                    kanten.append( (c, d) )
+                    
+            else :
                 
-                a = anzPunkte*(i-1) + stellePunkt - 1
-                b = anzPunkte*(i-1) + stellePunkt 
-                c = anzPunkte * i + stellePunkt - 1
-                d = anzPunkte * i + stellePunkt
-                              
-                neueKante = ( c, d )
-                kanten.append(neueKante)
+                if(stellePunkt != 0) : 
+                    #Kante parallel zur Rotationsachse
+                    kanten.append( (c,d) )
+               
+                #Kante orthogonal zur Rotationsachse
+                kanten.append( (b,d) ) 
                 
-                neueFlaeche = (a, b , c , d)
-                flaechen.append(neueFlaeche)
+                if (i == N -1 ) :
+                    #Kante orthogonal zur Rotationsachse
+                    kanten.append( (stellePunkt, d) )
                 
-                
-            stellePunkt += 1
-    
-    zeichneMesh(name, punkte,kanten, flaechen) 
-    
+                #erzeuge Flaechen
+                if ( stellePunkt != 0):
+                    flaechen.append( (a,b,d) )
+                    flaechen.append( (a,d,c) )
+                    if ( i == N -1 ):
+                        flaechen.append( ( c, d, stellePunkt) )
+                        flaechen.append( ( c, stellePunkt, stellePunkt -1) )
+                        
+            stellePunkt = stellePunkt + 1
+    zeichneMesh(name, punkte, kanten, flaechen)        
+    #return (punkte, kanten, flaechen)
+
               
 def zeichneMesh(name, punkte, kanten, flaechen):
     mesh = bpy.data.meshes.new(name)
@@ -101,3 +116,15 @@ def zeichneMesh(name, punkte, kanten, flaechen):
     
     mesh.from_pydata(punkte, kanten, flaechen )
     mesh.update(calc_edges=True)
+
+
+
+
+    
+    
+                    
+                    
+                    
+                     
+                   
+           
