@@ -240,8 +240,7 @@ def spitzPunkt(aww, pos): #aww: von berechenWinkel (Abstand, Winkel1, Winkel2), 
 def ausrollen(listX):
     pos = np.array((0,0))
     listP = []
-    listP.append(pos)
-    #print(listP)
+    
     for i in range(len(listX) - 2):
         aww = berechneWinkel( listX[i], listX[i+1] )
         punkt = spitzPunkt(aww, pos)
