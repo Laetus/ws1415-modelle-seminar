@@ -1,7 +1,7 @@
 import bpy
 import math
 import util
-
+import numpy as np
 
 def zeichneEllipse(name,anzPunkte, zWert) :
     pkt = ellipsenPunkte(anzPunkte, zWert)
@@ -57,7 +57,39 @@ def zeichne2DPolygon(name, listPunkte, zWert):
              
      #Print mesh into scene
      zeichneMesh(name, punkte, kanten, () )
-     return (punkte, kanten)
+    
+ 
+
+def zeichneRotationsKoerper(name, polygon, N):
+    punkte = polygon
+    kanten = []
+    flaechen = []
+    
+    ersterPkt = polygon[0]
+    anzPunkte = len(polygon)
+    
+    for i in range(1, N):
+        stellePunkt = 0
+        for punkt in polygon : 
+            neuerPunkt =  ( punkt[0] , np.cos(i/N * np.pi * 2) * punkt[1] , np.sin(i/N * np.pi * 2) * punkt[1] )
+            punkte.append(neuerPunkt)
+            if (stellePunkt != 0 ) :
+                
+                a = anzPunkte*(i-1) + stellePunkt - 1
+                b = anzPunkte*(i-1) + stellePunkt 
+                c = anzPunkte * i + stellePunkt - 1
+                d = anzPunkte * i + stellePunkt
+                              
+                neueKante = ( c, d )
+                kanten.append(neueKante)
+                
+                neueFlaeche = (a, b , c , d)
+                flaechen.append(neueFlaeche)
+                
+                
+            stellePunkt += 1
+    
+    zeichneMesh(name, punkte,kanten, flaechen) 
     
               
 def zeichneMesh(name, punkte, kanten, flaechen):

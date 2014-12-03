@@ -241,8 +241,8 @@ def ausrollen(listX):
     pos = np.array((0,0))
     listP = []
     
-    for i in range(len(listX) - 2):
-        aww = berechneWinkel( listX[i], listX[i+1] )
+    for i in range(len(listX) ):
+        aww = berechneWinkel( listX[i], listX[(i+1) % len(listX)] )
         punkt = spitzPunkt(aww, pos)
         #print(punkt)
         pos = pos + aww[0] * np.array((1,0))
