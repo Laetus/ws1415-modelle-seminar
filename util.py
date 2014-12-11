@@ -59,7 +59,7 @@ global maxIterationen
 maxIterationen = 10
 
 global a 
-a = 2.0
+a = 1.5
 
 global b
 b = 1.0
@@ -237,17 +237,19 @@ def spitzPunkt(aww, pos): #aww: von berechenWinkel (Abstand, Winkel1, Winkel2), 
     #x2 = mu*m1[1]
     #return np.array((x1, x2))
     
-def ausrollen(listX):
+def ausrollen(listX,n):
     pos = np.array((0,0))
     listP = []
     
-    for i in range(len(listX) ):
-        aww = berechneWinkel( listX[i], listX[(i+1) % len(listX)] )
-        punkt = spitzPunkt(aww, pos)
-        #print(punkt)
-        pos = pos + aww[0] * np.array((1,0))
-        #np.append(listP, [punkt], axis=0)
-        listP.append(punkt) 
+    for j in range(0,n) :
+        for i in range(len(listX) ):
+            aww = berechneWinkel( listX[i], listX[(i+1) % len(listX)] )
+            punkt = spitzPunkt(aww, pos)
+            #print(punkt)
+            pos = pos + aww[0] * np.array((1,0))
+            #np.append(listP, [punkt], axis=0)
+            listP.append(punkt) 
+            zeichne2DPolygon(str(i), listP, 0)
     return listP     
         
 def ellipsenPunkte(N,zWert):

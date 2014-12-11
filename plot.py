@@ -117,7 +117,21 @@ def zeichneMesh(name, punkte, kanten, flaechen):
     mesh.from_pydata(punkte, kanten, flaechen )
     mesh.update(calc_edges=True)
 
-
+def zeichneDelaunay(name,a1,b1, x0, d0, maxIt, r, N):
+        global a
+        global b
+    #    global maxIterationen
+        
+        a = a1* 1.0
+        b = b1 * 1.0
+     #   maxIterationen = maxIt
+        listX = startBilliard(x0,d0)
+        listA = ausrollen(listX)
+        zeichneRotation(name, listA, N)
+        
+        
+        
+    
 
 
     
