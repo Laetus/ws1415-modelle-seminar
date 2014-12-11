@@ -20,6 +20,18 @@ benachbarte punkte bleiben benachbart a b y ( immer a neben b)
 ... siehe blatt
 """
 
+global maxIterationen
+maxIterationen = 10
+
+global a 
+a = 1.5
+
+global b
+b = 1.0
+
+global eps
+eps = 0.0000001
+
 
 def startBilliard(x0, d0):
     x0 = x0 * 1.0
@@ -55,20 +67,6 @@ def startBilliard(x0, d0):
 Parameter der Ellipse
 """
 
-global maxIterationen
-maxIterationen = 10
-
-global a 
-a = 1.5
-
-global b
-b = 1.0
-
-global f
-f = np.array((np.sqrt(a**2-b**2),0))
-
-global eps
-eps = 0.0000001
 """
 In this example the center of the ellipse is always the origin
 """
@@ -90,6 +88,8 @@ def isInEllipse(x):
     else :
         return False;
 
+def getPositiveFocusPoint():
+    return np.array((np.sqrt(a**2-b**2),0))
 
 def checkDimension(x,expectedDim):
     if (np.size(x) != expectedDim):
@@ -220,8 +220,8 @@ def berechneEllipsenWinkel(p):
     
 def berechneWinkel(p0, p1):
     p0p1 = np.linalg.norm(p0 - p1)
-    p0f = np.linalg.norm(p0 - f)
-    p1f = np.linalg.norm(p1 - f)
+    p0f = np.linalg.norm(p0 - getPositiveFocusPoint())
+    p1f = np.linalg.norm(p1 - getPositiveFocusPoint())
     w0 = np.arccos((p0f**2+p0p1**2-p1f**2)/(2*p0p1*p0f))
     w1 = np.arccos((p1f**2+p0p1**2-p0f**2)/(2*p0p1*p1f))
     return np.array((p0p1, w0, w1))
@@ -249,7 +249,6 @@ def ausrollen(listX,n):
             pos = pos + aww[0] * np.array((1,0))
             #np.append(listP, [punkt], axis=0)
             listP.append(punkt) 
-            zeichne2DPolygon(str(i), listP, 0)
     return listP     
         
 def ellipsenPunkte(N,zWert):
