@@ -106,7 +106,61 @@ def zeichneRotation(name, polygon, N ):
     zeichneMesh(name, punkte, kanten, flaechen)        
     #return (punkte, kanten, flaechen)
 
-              
+def zeichneAusgerollt(listA, name) :
+    
+    listP = []
+    listPos = []
+    
+    for i in range(len(listA[0]) ):
+        listP.append( (listA[0][i][0] , listA[0][i][1] , 0 ) )
+
+    for i in range(len(listA[1]) ) :
+        listPos.append( (listA[1][i][0] , listA[1][i][1] , 1 )) 
+    
+    punkte = []
+    kanten = []
+    flaechen = []
+    
+    j = 0
+    
+    punkte.extend(listP)
+    punkte.extend(listPos)
+    
+    for i in range(len(listP) ):
+        kanten.append( (len(listPos) + i - 1 , i ) )
+        kanten.append( ( i, len(listPos) + i  ) ) 
+        
+        if i != 0:
+            kanten.append( (i -1 , i ))
+            
+    for i in range(1, len(listPos) ) :
+        kanten.append( (i + len(listP) -1 , i + len(listP)  ) )
+    
+    zeichneMesh(name, punkte, kanten, flaechen)
+    
+    
+def zeichneBilliardmitFocus(name, listPunkte) :
+    punkte = []
+    kanten = []
+    i = 0
+    anzPunkte = len(listPunkte)
+    for element in listPunkte :
+        if element.size == 2 : 
+            punkte.append( (element[0] , element[1] , 0) )
+            kanten.append( (i, (i+1) % anzPunkte) )
+            i += 1
+        else :
+            raise Error("Die Punkte haben die falsche Dimension!")
+    
+    for i in range(len(punkte)):
+        kanten.append( (len(punkte), i) )
+    
+    
+    punkte.append( (getPositiveFocusPoint()[0] , 0 , 0) )
+    
+    zeichneMesh(name, punkte, kanten, () )
+     
+        
 def zeichneMesh(name, punkte, kanten, flaechen):
     mesh = bpy.data.meshes.new(name)
     object = bpy.data.objects.new(name, mesh)
@@ -122,12 +176,12 @@ def zeichneDelaunay(name,a1,b1, x0, d0, maxIt, r, N):
         global b
     #    global maxIterationen
         
-        a = a1* 1.0
+        a = a1 * 1.0
         b = b1 * 1.0
      #   maxIterationen = maxIt
         listX = startBilliard(x0,d0)
-        listA = ausrollen(listX)
-        zeichneRotation(name, listA, N)
+        listA = ausrollen(listX, N)
+        zeichneRotation(name, listA[0], r)
         
         
         
