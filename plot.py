@@ -41,6 +41,13 @@ def entferneMeshes():
         bpy.data.meshes.remove(item)
     for item in bpy.data.materials:
         bpy.data.materials.remove(item)
+        
+       
+def entferneMesh(name):
+    bpy.context.scene.objects.unlink(bpy.data.objects[name])
+    bpy.data.objects.remove(bpy.data.objects[name])
+    bpy.data.meshes.remove(bpy.data.meshes[name])
+     
 
 def zeichne2DPolygon(name, listPunkte, zWert):
      punkte = []
@@ -54,7 +61,7 @@ def zeichne2DPolygon(name, listPunkte, zWert):
              i += 1
          else :
              raise Error("Die Punkte haben die falsche Dimension!")
-             
+            
      #Print mesh into scene
      zeichneMesh(name, punkte, kanten, () )
     
