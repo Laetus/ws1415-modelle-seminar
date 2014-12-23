@@ -21,10 +21,10 @@ benachbarte punkte bleiben benachbart a b y ( immer a neben b)
 """
 
 global maxIterationen
-maxIterationen = 10
+maxIterationen = 14
 
 global a 
-a = 2.0
+a = 1.25
 
 global b
 b = 1.0
@@ -238,9 +238,11 @@ def spitzPunkt(aww, pos): #aww: von berechenWinkel (Abstand, Winkel1, Winkel2), 
     #return np.array((x1, x2))
     
 def ausrollen(listX,n):
-    pos = np.array((0.0,0.0))
+    pos = np.array((0,0))
     listP = []
     listPos = [pos]
+    listAWW = []
+    
     
     for j in range(0,n) :
         for i in range(len(listX) ):
@@ -249,7 +251,8 @@ def ausrollen(listX,n):
             pos = pos + aww[0] * np.array((1,0))
             listPos.append(pos)
             listP.append(punkt) 
-    return (listP, listPos)
+            listAWW.append(aww)
+    return (listP, listPos, listAWW)
         
 def ellipsenPunkte(N,zWert):
     res = []
@@ -260,4 +263,11 @@ def ellipsenPunkte(N,zWert):
     
     return res
 
+
+def rotationUmPunkt(element, rotZentrum, winkel):
+    element = np.dot(drehMatrix2D(winkel),  element - rotZentrum) + rotZentrum
+
+    return np.array((element[0,0] , element[0,1]))
+    
+    
               
