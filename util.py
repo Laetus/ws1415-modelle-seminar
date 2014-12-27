@@ -60,7 +60,7 @@ def startBilliard(x0, d0):
          
     print("Billiard fertig!", x+1) 
     #return (listX, listD)
-    listX.sort(key=berechneEllipsenWinkel)
+    
     #listX = sorted(listX, vergleichsFunktion)
     return listX
 """
@@ -238,6 +238,7 @@ def spitzPunkt(aww, pos): #aww: von berechenWinkel (Abstand, Winkel1, Winkel2), 
     #return np.array((x1, x2))
     
 def ausrollen(listX,n):
+    listX.sort(key=berechneEllipsenWinkel)
     pos = np.array((0,0))
     listP = []
     listPos = [pos]
