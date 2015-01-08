@@ -14,13 +14,10 @@ listA = ausrollen(listX,1)
 
 ##### 
 entferneMeshes()
-anzFrames = animiereAusrollen(listX, listA)
-
-
-
 global counter 
 counter = 0
 
+anzFrames = animiereAusrollen(listX, listA)
 
 
 for obj in bpy.data.objects :

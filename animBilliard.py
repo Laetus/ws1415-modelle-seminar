@@ -6,12 +6,11 @@ import util
 
 
 x = np.array((a , 0 ))
-#d = np.array((1, 4.1414141414))
-d = np.array((1, 0.700700700700700))
+d = np.array((1, 4.1414141414))
+#d = np.array((1, 0.700700700700700))
 listX = startBilliard(x,d)
 
 
-######
 
 entferneMeshes()
 global counter 
@@ -35,9 +34,9 @@ def my_handlerBilliard(scene) :
     n = frame % anzFrames
     
     bpy.data.objects[str( n -1 % anzFrames + 1000)].hide = True
-    
+    bpy.data.objects[str( n -1 % anzFrames + 1000)].select = True
     bpy.data.objects[str(n + 1000) ].hide = False
-    
+    bpy.data.objects[str(n + 1000) ].select = False
     if n <= 1 :
         bpy.data.objects[str(anzFrames -1 +1000)].hide = True
     

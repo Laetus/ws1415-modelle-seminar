@@ -118,7 +118,7 @@ def zeichneSchuss(i, listX, lmd):
     
     konvKomb = ((1-lmd) * listX[i-1]) + (lmd * listX[i])
     
-    punkte.append(( konvKomb[0] , konvKomb[1] , 0 ))
+    punkte.append(( konvKomb[0] , konvKomb[1] , 0.01 ))
     kanten.append( ( i-1 , i) )
    
     global counter 
