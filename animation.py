@@ -112,7 +112,7 @@ def zeichneSchuss(i, listX, lmd):
     flaechen = []
     
     for j in range(0,i) :
-        punkte.append( (listX[j][0] , listX[j][1] , 0) )
+        punkte.append( (listX[j][0] , listX[j][1] , 0.01) )
         if j != 0 :
             kanten.append( (j-1 , j) )
     

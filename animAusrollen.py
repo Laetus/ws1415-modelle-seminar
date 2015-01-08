@@ -5,7 +5,8 @@ import util
 ### Parameter für Animation Ausrollen
 
 x = np.array((a , 0 ))
-d = np.array((1, 0.700700700700700))
+#d = np.array((1, 0.700700700700700))
+d = np.array((1, 4.1414141414))
 listX = startBilliard(x,d)
 listA = ausrollen(listX,1)
 

@@ -6,6 +6,7 @@ import util
 
 
 x = np.array((a , 0 ))
+#d = np.array((1, 4.1414141414))
 d = np.array((1, 0.700700700700700))
 listX = startBilliard(x,d)
 
@@ -34,6 +35,7 @@ def my_handlerBilliard(scene) :
     n = frame % anzFrames
     
     bpy.data.objects[str( n -1 % anzFrames + 1000)].hide = True
+    
     bpy.data.objects[str(n + 1000) ].hide = False
     
     if n <= 1 :
