@@ -39,6 +39,8 @@ def my_handlerAusrollen(scene) :
 bpy.app.handlers.frame_change_pre.clear()
 bpy.app.handlers.frame_change_post.clear()
 
+bpy.data.scenes['Scene'].frame_end = anzFrames
+
 
 bpy.app.handlers.frame_change_pre.append(my_handlerAusrollen)
 

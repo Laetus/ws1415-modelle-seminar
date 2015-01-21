@@ -6,11 +6,12 @@ import util
 
 
 x = np.array((a , 0 ))
-d = np.array((1, 4.1414141414))
-#d = np.array((1, 0.700700700700700))
+#d = np.array((1, 4.1414141414))
+d = np.array((1, 0.700700700700700))
 listX = startBilliard(x,d)
 
 
+######
 
 entferneMeshes()
 global counter 
@@ -44,6 +45,8 @@ def my_handlerBilliard(scene) :
    
 bpy.app.handlers.frame_change_pre.clear()
 bpy.app.handlers.frame_change_post.clear()
+
+bpy.data.scenes['Scene'].frame_end = anzFrames
 
 
 bpy.app.handlers.frame_change_pre.append(my_handlerBilliard)

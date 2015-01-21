@@ -2,7 +2,6 @@ import bpy
 import math
 import util
 import numpy as np
-import plot
 import time
 import random
 

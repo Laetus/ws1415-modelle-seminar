@@ -122,7 +122,7 @@ def zeichneAusgerollt(listA, name) :
         listP.append( (listA[0][i][0] , listA[0][i][1] , 0 ) )
 
     for i in range(len(listA[1]) ) :
-        listPos.append( (listA[1][i][0] , listA[1][i][1] , 1 )) 
+        listPos.append( (listA[1][i][0] , listA[1][i][1] , 0 )) 
     
     punkte = []
     kanten = []
